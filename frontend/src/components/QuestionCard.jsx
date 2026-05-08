@@ -8,7 +8,7 @@ function QuestionCard({ question, headers }) {
 
   useEffect(() => {
     if (showAnswers) {
-      axios.get(`http://localhost:5000/api/answers/${question.id}`, { headers })
+      axios.get(`${import.meta.env.VITE_API_URL}/api/answers/${question.id}`, { headers })
         .then(res => setAnswers(res.data))
         .catch(() => {})
     }
@@ -17,12 +17,12 @@ function QuestionCard({ question, headers }) {
   const handlePostAnswer = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('http://localhost:5000/api/answers', {
+      await axios.post('${import.meta.env.VITE_API_URL}/api/answers', {
         body: newAnswer,
         question_id: question.id
       }, { headers })
       setNewAnswer('')
-      const res = await axios.get(`http://localhost:5000/api/answers/${question.id}`, { headers })
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/answers/${question.id}`, { headers })
       setAnswers(res.data)
     } catch (err) {
       console.error(err)

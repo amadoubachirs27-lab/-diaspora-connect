@@ -17,14 +17,14 @@ function Dashboard() {
   const headers = { Authorization: `Bearer ${user.token}` }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/categories', { headers })
+    axios.get('${import.meta.env.VITE_API_URL}/api/categories', { headers })
       .then(res => setCategories(res.data))
       .catch(() => {})
   }, [])
 
   useEffect(() => {
     if (selectedCategory) {
-      axios.get(`http://localhost:5000/api/questions/${selectedCategory.id}`, { headers })
+      axios.get(`${import.meta.env.VITE_API_URL}/api/questions/${selectedCategory.id}`, { headers })
         .then(res => setQuestions(res.data))
         .catch(() => {})
     }
@@ -38,14 +38,14 @@ function Dashboard() {
   const handlePostQuestion = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('http://localhost:5000/api/questions', {
+      await axios.post('${import.meta.env.VITE_API_URL}/api/questions', {
         title: newQuestion.title,
         body: newQuestion.body,
         category_id: selectedCategory.id
       }, { headers })
       setNewQuestion({ title: '', body: '' })
       setShowForm(false)
-      const res = await axios.get(`http://localhost:5000/api/questions/${selectedCategory.id}`, { headers })
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/questions/${selectedCategory.id}`, { headers })
       setQuestions(res.data)
     } catch (err) {
       console.error(err)
