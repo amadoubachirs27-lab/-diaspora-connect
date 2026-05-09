@@ -27,7 +27,7 @@ function Register() {
       return
     }
     try {
-      await axios.post('${import.meta.env.VITE_API_URL}/api/auth/register', { username, password })
+      await axios.post(`https://diaspora-connect-production.up.railway.app/api/auth/register`, { username, password })
       navigate('/login')
     } catch (err) {
       setErrors({ username: err.response?.data?.message || 'Registration failed.' })
